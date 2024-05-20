@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { CelebritiesList } from "./components/CelebritiesList";
+import TextField from "@mui/material/TextField";
+import { useDispatch, useSelector } from "react-redux";
+import { CelebrityActions } from "./store/celebrity.slice";
 
 function App() {
+  const dispatch = useDispatch();
+  const searchText = useSelector((state) => state.celebrity.searchText);
+  const handleInputChange = (event) => {
+    dispatch(CelebrityActions.updateSearchText(event.target.value));
+  };
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Celebrites Info</h1>
       </header>
+      <main>
+        <TextField
+          id="outlined-basic"
+          label="Search User"
+          variant="outlined"
+          sx={{ margin: "16px", width: "30%" }}
+          value={searchText}
+          onChange={handleInputChange}
+        />
+        <CelebritiesList />
+      </main>
     </div>
   );
 }
